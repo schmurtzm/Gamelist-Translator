@@ -1,8 +1,15 @@
 # Gamelist-Translator By Schmurtz
-# V1.0 - 2022-04-20
 
 # Translate games descriptions in gamelist.xml from EmulationStation (thanks to a powershell script and Google Translate).
 # https://github.com/schmurtzm/Gamelist-Translator
+
+# V1.0 - 2022-04-20
+#   - You can change the target language inside the script.
+#   - Create backup of the original gamelist.xml before modification (the backup will be named gamelist-yyyy-MM-dd_HHmmss.xml)
+#   - Should support accents / UTF8 in the right way.
+
+# V1.1 - 2022-04-20
+#   - Now it count the total of characters which have been send to translation
 
 # usage : run a powershell cmd then type :
 # Gamelist-Translator.ps1 "c:\RetroBat\roms\ports\gamelist.xml"
@@ -16,7 +23,7 @@ if($args.Count -eq 0) {
 
 
 
-$TargetLanguage = ìfrî
+$TargetLanguage = ‚Äúfr‚Äù
 
 
 # Read the existing file properties
@@ -47,11 +54,15 @@ foreach ($element in $xmlDoc.gameList.game)
     # display current game name
     write-host `n------------ $element.name   ------------`n
     # display current game description
-    write-host $element.desc
+    
 
-    # Translation thanks to Google Translate API
+    # Get the current description of the game and its lenght
     $Text = $element.desc
-    $Uri = ìhttps://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=$($TargetLanguage)&dt=t&q=$Textî
+	write-host $Text
+	$TotalLengh = $TotalLengh + $Text.length
+	
+	# Translation thanks to Google Translate API
+    $Uri = ‚Äúhttps://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=$($TargetLanguage)&dt=t&q=$Text‚Äù
     $Response = Invoke-RestMethod -Uri $Uri -Method Get
     $RawResponse = (Invoke-WebRequest -Uri $Uri -Method Get).Content
 
@@ -69,7 +80,5 @@ foreach ($element in $xmlDoc.gameList.game)
 
 $xmlDoc.Save($file_Fullpath)
 
-
-
-
-
+write-host `n`n Total lenght of the source text : $TotalLengh characters.
+pause
