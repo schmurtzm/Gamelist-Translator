@@ -15,3 +15,7 @@ V1.0 - 2022-04-20 - initial version
 - You can change the target language inside the script.
 - Create backup of the original gamelist.xml before modification (the backup will be named gamelist-yyyy-MM-dd_HHmmss.xml)
 - Should support accents / UTF8 in the right way.
+
+
+V1.1 - 2022-04-20
+- Now it count the total of characters which have been send to translation
