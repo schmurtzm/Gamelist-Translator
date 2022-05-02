@@ -23,7 +23,7 @@ if($args.Count -eq 0) {
 
 
 
-$TargetLanguage = “fr”
+$TargetLanguage = "fr"
 
 
 # Read the existing file properties
@@ -62,7 +62,7 @@ foreach ($element in $xmlDoc.gameList.game)
 	$TotalLengh = $TotalLengh + $Text.length
 	
 	# Translation thanks to Google Translate API
-    $Uri = “https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=$($TargetLanguage)&dt=t&q=$Text”
+    $Uri = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=$($TargetLanguage)&dt=t&q=$Text"
     $Response = Invoke-RestMethod -Uri $Uri -Method Get
     $RawResponse = (Invoke-WebRequest -Uri $Uri -Method Get).Content
 
